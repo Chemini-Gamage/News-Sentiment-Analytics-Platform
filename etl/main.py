@@ -6,6 +6,7 @@ from sentiment import analyze_sentiment
 
 from load_db import save_to_db
 
+from category import get_category
 
 articles = get_news()
 
@@ -16,6 +17,8 @@ for article in articles:
     title = article["title"]
 
     sentiment, score = analyze_sentiment(title)
+
+    category = get_category(title)
 
     records.append(
         {
@@ -28,6 +31,9 @@ for article in articles:
             "published_date":
                 article["publishedAt"],
 
+            "category":
+                category,
+
             "sentiment":
                 sentiment,
 
@@ -37,6 +43,8 @@ for article in articles:
     )
 
 df = pd.DataFrame(records)
+#We avoid inserting the same article twice.
+df = df.drop_duplicates(subset=["title"])
 
 save_to_db(df)
 
