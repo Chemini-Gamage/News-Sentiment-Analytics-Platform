@@ -68,7 +68,11 @@ for article in articles:
 
 df = pd.DataFrame(records)
 
+
+# CLEAN STEP (VERY IMPORTANT)
+df = df.dropna(subset=["title"])
 df = df.drop_duplicates(subset=["title"])
+df = df[df["title"].str.len() > 10]
 
 save_to_db(df)
 

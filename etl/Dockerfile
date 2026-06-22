@@ -1,13 +1,9 @@
 FROM python:3.11
-
 WORKDIR /app
 
-COPY requirements.txt .
+COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
-
 RUN python -m spacy download en_core_web_sm
-
-COPY . .
 
 CMD ["python", "main.py"]

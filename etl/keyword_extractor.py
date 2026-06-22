@@ -1,20 +1,28 @@
 import re
 
 STOPWORDS = {
-    "the","a","an","and","or",
-    "of","to","for","in","on",
-    "at","with"
+    "the","a","an","and","or","of","to","for","in","on","at","with",
+    "live","updates","breaking","news","today"
 }
 
 def extract_keywords(text):
 
-    words = re.findall(r"\w+", text.lower())
+    words = re.findall(r"[a-zA-Z]+", text.lower())
 
-    keywords = []
+    cleaned = []
 
-    for word in words:
+    for w in words:
 
-        if len(word) > 3 and word not in STOPWORDS:
-            keywords.append(word)
+        if len(w) > 3 and w not in STOPWORDS:
+            cleaned.append(w)
 
-    return ",".join(keywords[:5])
+    # remove duplicates but preserve order
+    seen = set()
+    final = []
+
+    for w in cleaned:
+        if w not in seen:
+            final.append(w)
+            seen.add(w)
+
+    return ",".join(final[:5])

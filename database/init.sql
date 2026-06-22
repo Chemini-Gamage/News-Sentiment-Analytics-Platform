@@ -1,15 +1,15 @@
-CREATE TABLE IF NOT EXISTS news_articles (
 
+CREATE TABLE news_articles (
     id SERIAL PRIMARY KEY,
-
-    source VARCHAR(100),
-
+    source TEXT,
     title TEXT,
-
     published_date TIMESTAMP,
-
-    sentiment VARCHAR(20),
-
-    sentiment_score FLOAT
-
+    sentiment TEXT,
+    sentiment_score FLOAT,
+    category TEXT,   -- 👈 ADD THIS
+    organization TEXT,
+    person TEXT,
+    location TEXT,
+    keywords TEXT,
+    headline_length INT
 );
