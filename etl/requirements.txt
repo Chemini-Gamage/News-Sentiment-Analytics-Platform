@@ -3,4 +3,11 @@ pandas
 python-dotenv
 nltk
 sqlalchemy
+psycopg2-binaryrequests
+pandas
+python-dotenv
+nltk
+sqlalchemy
 psycopg2-binary
+
+spacy
