@@ -4,9 +4,14 @@ from fetch_news import get_news
 
 from sentiment import analyze_sentiment
 
+from category import get_category
+
+from entity_extractor import extract_entities
+
+from keyword_extractor import extract_keywords
+
 from load_db import save_to_db
 
-from category import get_category
 
 articles = get_news()
 
@@ -20,6 +25,10 @@ for article in articles:
 
     category = get_category(title)
 
+    orgs, persons, locations = extract_entities(title)
+
+    keywords = extract_keywords(title)
+
     records.append(
         {
             "source":
@@ -31,19 +40,34 @@ for article in articles:
             "published_date":
                 article["publishedAt"],
 
-            "category":
-                category,
-
             "sentiment":
                 sentiment,
 
             "sentiment_score":
-                score
+                score,
+
+            "category":
+                category,
+
+            "organization":
+                orgs,
+
+            "person":
+                persons,
+
+            "location":
+                locations,
+
+            "keywords":
+                keywords,
+
+            "headline_length":
+                len(title)
         }
     )
 
 df = pd.DataFrame(records)
-#We avoid inserting the same article twice.
+
 df = df.drop_duplicates(subset=["title"])
 
 save_to_db(df)
